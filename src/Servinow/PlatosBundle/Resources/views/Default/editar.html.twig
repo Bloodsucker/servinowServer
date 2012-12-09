@@ -1,0 +1,61 @@
+{% extends 'ServinowNavigationBundle:Navigation:index.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/servinowplatos/css/pantallaPlatos.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<h2>Edición del plato <span class="editarPlato">{{producto.nombre}}</span></h2>
+
+<form method="post" action="{{ path('servinow_platos_homepage_decidir', {'restaurantID': 1 }) }}">
+    {#truco marrullero para pasar el productoID#}
+    <input type="text" name="platoID" value="{{producto.Id}}" hidden>
+    <table>
+        <tbody>
+            <tr>
+                <td>Nombre<br/><input type="text" name="nombre" value="{{producto.nombre}}" required="required" placeholder="Nombre del plato" maxlength="30"/></td>
+                <td></td>
+                <td>Imagen<br/><input type="file"/></td>
+            </tr>
+            <tr>
+                <td>Descripción<br/><textarea rows="4" name="descripcion" required="required" placeholder="Descripción del plato" maxlength="500">{{producto.descripcion}}</textarea></td>
+                <td></td>
+                <td>Categorías<br/>
+                    <div class="categorias">
+                    {% for categoria in categorias %}
+
+                        <input type="checkbox" name="categorias[]" value="{{categoria.id}}"
+                        {% for categoriaPlato in producto.categorias %}
+                            {% if categoriaPlato.id == categoria.id %}
+
+                               checked
+                            {% endif %}
+                        {% endfor %}
+
+                        />{{categoria.nombre}}<br />
+                    {% endfor %}
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Precio<br/><input type="number" name="precio" value="{{producto.precio}}" required="required" placeholder="X,YZ" min="0.00" max="9999.99" step="0.01" maxlength="8"/> €</td>
+                <td></td>
+                <td><input type="checkbox" name="disponible" {% if producto.disponible == true %}checked {% endif %}/>Disponible<br /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td style="text-align: right">
+                    <button type=submit name="action" value="aceptarEditar">Aceptar</button>
+                    <button type=submit name="action" value="descartarEditar">Descartar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+{% endblock %}
+
+

@@ -12,6 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductoRepository extends EntityRepository
 {
+    public function findProductoId($restauranteId, $productoId){
+        $producto = $this->getEntityManager()->getRepository("ServinowEntitiesBundle:Producto")
+                ->findOneBy(array('id'=>$productoId, 'restaurante'=>$restauranteId));
+        return $producto;
+    }
+    
+    public function updateProductoById($RestauranteId, $productoId, $nombre, $descripcion, $precio, $disponible){
+        $producto = $this->getEntityManager()->getRepository("ServinowEntitiesBundle:Producto")
+                ->findOneBy(array('id'=>$productoId, 'restaurante'=>$RestauranteId));
+        $em = $this->getEntityManager();
+        $producto->setNombre($nombre);
+        $producto->setDescripcion($descripcion);
+        $producto->setPrecio(doubleval($precio));
+        $producto->setDisponible($disponible);
+        $em->flush();
+    }
+
     public function findProductosTop10Ingresos($fecha_inicio, $fecha_fin, $restaurante){
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('prod.id', 'prod.nombre', 'SUM(l.cantidad * prod.precio) AS total')
@@ -58,5 +75,19 @@ class ProductoRepository extends EntityRepository
                 ))->leftJoin('ped.lineasPedido', 'l')
                 ->leftJoin('l.producto', 'prod');
         return $qb->getQuery()->getSingleResult();
+    }
+    
+    public function setCategoriasOfProducto($restauranteId, $productoId, $categoriasId) {
+        $repository = $this->getEntityManager()->getRepository("ServinowEntitiesBundle:Categoria");
+        
+        $categorias = $repository->findCategoriasByRestaurante($restauranteId);        
+        
+        foreach ($categorias as $categoria) {
+            $repository->removeProductoFromCategoria($categoria->getId(), $productoId);
+        }
+        
+        foreach ($categoriasId as $categoriaId) {
+            $repository->addProductoToCategoria($categoriaId, $productoId);
+        }
     }
 }

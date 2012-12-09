@@ -1,0 +1,15 @@
+servinow_platos_homepage:
+    pattern:  /
+    defaults: { _controller: ServinowPlatosBundle:Default:index }
+
+servinow_platos_homepage_decidir:
+    pattern:  /decidir
+    defaults: { _controller: ServinowPlatosBundle:Default:decidir }
+    
+servinow_platos_homepage_editar:
+    pattern:  /{productoID}/editar/
+    defaults: { _controller: ServinowPlatosBundle:Default:editar }
+    
+servinow_platos_homepage_nuevo:
+    pattern:  /nuevo
+    defaults: { _controller: ServinowPlatosBundle:Default:nuevo }

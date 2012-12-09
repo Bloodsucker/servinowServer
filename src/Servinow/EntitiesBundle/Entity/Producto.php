@@ -166,7 +166,7 @@ class Producto
      * @param float $precio
      * @return Producto
      */
-    public function setPrecio(\double $precio)
+    public function setPrecio($precio)
     {
         $this->precio = $precio;
     

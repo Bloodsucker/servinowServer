@@ -1,0 +1,40 @@
+/* 
+    Document   : pantallaPlatos
+    Created on : 04-dic-2012, 17:30:37
+    Author     : Luis, Jorge
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#content td {
+    padding: 10px;
+}
+
+div.categorias {
+    height: 100px;
+    overflow: auto;
+    padding: 0px 5px;
+    border: 1px solid #ada9a5;
+    background-color: #FFFFFF;
+}
+
+form.listadoPlatos {
+    margin:10px 0px;
+    overflow:hidden;
+}
+
+select.listadoPlatos {
+    float: left;
+    width: 300px;
+}
+
+#content h2 {
+    margin: 20px;
+    color: #d94a38;
+    font-size: 1.5em;
+}
+
+span.editarPlato {
+    font-style: oblique;
+    color: #777777;
+}

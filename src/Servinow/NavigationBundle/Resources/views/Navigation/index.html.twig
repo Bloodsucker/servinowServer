@@ -23,7 +23,7 @@
 						<li>
 							<a href="#TODO" >{{ "Restaurante"  | trans }}</a>
 							<ul class="submenu">
-								<li><a href="#TODO" >{{ "Creación de platos"  | trans }}</a></li>
+								<li><a href="{{ path('servinow_platos_homepage', {'restaurantID': restaurantID }) }}" >{{ "Creación de platos"  | trans }}</a></li>
 								{#<li><a href="#TODO" >{{ "Creación de menús"  | trans }}</a></li>#}
 								<li><a href="{{path('servinow_movimientos_de_caja_general', {'restaurantID': restaurantID})}}" >{{ "Facturación y estadísticas"  | trans }}</a></li>
 								<li><a href="{{path('servinow_restaurant_drawer_homepage', {'restaurantID' : restaurantID} )}}" >{{ "Espacio del restaurante"  | trans }}</a></li>

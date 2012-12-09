@@ -1,0 +1,7 @@
+parameters:
+#    servinow_platos.example.class: Servinow\PlatosBundle\Example
+
+services:
+#    servinow_platos.example:
+#        class: %servinow_platos.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

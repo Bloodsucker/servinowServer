@@ -1,0 +1,42 @@
+{% extends 'ServinowNavigationBundle:Navigation:index.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/servinowplatos/css/pantallaPlatos.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+    function setRequired(required) {
+        document.getElementById("listadoPlatos").required = required;
+    }
+    
+    function confirmar() {
+        if ($("#listadoPlatos option:selected").length &&
+                confirm('Se eliminará el plato seleccionado. ¿Está seguro?')) {            
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h2>Gestión de platos</h2>
+
+<form class="listadoPlatos" method="post" action="{{ path('servinow_platos_homepage_decidir', {'restaurantID': 1 }) }}">
+    <select class="listadoPlatos" id="listadoPlatos" name='platoID' size="10">
+    {% for plato in platos %}
+        <option value="{{plato.id}}" >{{plato.nombre}}</option>
+    {% endfor %}
+    </select>
+    <button type="submit" name="action" value="nuevo" onclick="setRequired(false)">Nuevo</button>
+    <button type="submit" name="action" value="editar" onclick="setRequired(true)">Editar</button>
+    <button type="submit" name="action" value="eliminar" onclick="setRequired(true); return confirmar()">Eliminar</button>
+</form>
+
+{% endblock %}
+
+

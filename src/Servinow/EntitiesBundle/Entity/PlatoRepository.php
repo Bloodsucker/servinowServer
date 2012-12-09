@@ -12,4 +12,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlatoRepository extends EntityRepository
 {
+     public function findPlatosbyRestaurant($restauranteId){
+        return $this->getEntityManager()->getRepository("ServinowEntitiesBundle:Plato")
+                ->findBy(array('restaurante'=>$restauranteId));
+    }
+    
+    public function deletePlatobyID($platoId){
+        $em = $this->getEntityManager();
+        
+        $plato = $em->getRepository("ServinowEntitiesBundle:Plato")
+                ->find($platoId);
+        
+        $em->remove($plato);
+        $em->flush();
+    }
+    
+    public function insertPlato($RestauranteId, $nombre, $descripcion, $precio, $disponible){
+        
+        $plato = new Plato;
+        $em = $this->getEntityManager();
+        $restaurante = $em->getRepository("ServinowEntitiesBundle:Restaurante")->find($RestauranteId);
+        $plato->setNombre($nombre);
+        $plato->setDescripcion($descripcion);
+     /*   $producto->setPrecio(doubleval($doublePrecio)); */
+        $plato->setRestaurante($restaurante);
+        $plato->setDisponible($disponible);
+        $plato->setImagen("meal.jpg");
+        $plato->SetPrecio(doubleval($precio));
+        $em->persist($plato);
+        
+        $em->flush();
+        
+        /* Obtengo el id del plato recién insertado */
+        $em->refresh($plato);
+        return $plato->getId();
+    }
+    
+    
 }

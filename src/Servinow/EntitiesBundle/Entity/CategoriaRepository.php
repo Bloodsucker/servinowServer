@@ -12,4 +12,40 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoriaRepository extends EntityRepository
 {
+    public function findCategoriasByRestaurante($restauranteId){
+        // TODO Las categorías deberían ser definidas por cada restaurante.
+        // Reemplazar return una vez solucionado.
+        /*return $this->getEntityManager()->getRepository("ServinowEntitiesBundle:Categoria")
+                ->findBy(array('restaurante'=>$restauranteId));*/
+        return $this->getEntityManager()->getRepository("ServinowEntitiesBundle:Categoria")
+                ->findAll();
+    }
+    
+    public function addProductoToCategoria($categoriaId, $productoId) {
+        $em = $this->getEntityManager();
+        
+        $categoria = $em->getRepository("ServinowEntitiesBundle:Categoria")
+                ->find($categoriaId);
+        $producto = $em->getRepository("ServinowEntitiesBundle:Producto")
+                ->find($productoId);
+        
+        if (!$categoria->getProductos()->contains($producto)) {
+            $categoria->addProducto($producto);
+            $em->persist($categoria);
+            $em->flush();
+        }
+    }
+    
+    public function removeProductoFromCategoria($categoriaId, $productoId) {
+        $em = $this->getEntityManager();
+        
+        $categoria = $em->getRepository("ServinowEntitiesBundle:Categoria")
+                ->find($categoriaId);
+        $producto = $em->getRepository("ServinowEntitiesBundle:Producto")
+                ->find($productoId);
+        
+        $categoria->removeProducto($producto);
+        $em->persist($categoria);
+        $em->flush();
+    }
 }
